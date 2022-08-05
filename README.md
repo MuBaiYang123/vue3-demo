@@ -10,3 +10,20 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 # vue3-demo
 vue3.2+vite+element-plus写的能实现简单crud的小demo
+
+## 1、新增
+
+## 2、删除
+
+## 3、多选删除
+
+## 4、编辑
+
+## 5、搜索
+
+# 涉及技术点
+## vue
+## javscript
+## css
+## html
+## 编程算法
