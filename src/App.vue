@@ -26,7 +26,7 @@
         <template #default="scope">
           <el-button link type="primary" size="small" @click="handleRowClick(scope.row)" style="color: #F56C6C">删除
           </el-button>
-          <el-button link type="primary" size="small">编辑</el-button>
+          <el-button link type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,7 +68,7 @@ let multipleSelection = $ref([])
 let dialogFormVisible = $ref(false)
 
 let tableForm = $ref({
-  name: '张三',
+  name: '',
   email: '',
   phone: '',
   state: '',
@@ -102,8 +102,14 @@ let tableData = $ref([
   }
 ])
 
-let dialogType = ref('add')
+let dialogType = $ref('add')
 //方法
+//编辑
+const handleEdit = (row) => {
+  dialogFormVisible = true
+  dialogType = 'edit'
+  tableForm = { ...row }
+}
 //删除一条
 const handleRowClick = ({ id }) => {
 
@@ -125,19 +131,30 @@ const handleSelectionChange = (val) => {
 //处理弹窗-新增
 const handleDialog = () => {
   dialogFormVisible = true;
+  dialogType = 'add'
   tableForm = {}
 }
 
 //新增成功--确认
 const dialogConfirm = () => {
   dialogFormVisible = false;
-  //1.拿到数据
 
-  //2.添加到table
-  tableData.push({
-    id: (tableData.length + 1).toString(),
-    ...tableForm
-  })
+  //1.判断新增，还是编辑
+  if (dialogType === 'add') {
+    //1.拿到数据
+    //2.添加到table
+    tableData.push({
+      id: (tableData.length + 1).toString(),
+      ...tableForm
+    })
+  } else {
+    //1.获取到正在修改的这条索引值
+    let index = tableData.findIndex(item => item.id === tableForm.id)
+    //2.替换当前索引值对应的数据
+    tableData[index] = tableForm
+
+  }
+
 }
 
 //删除多条
@@ -147,6 +164,7 @@ const handleDelList = () => {
   })
   multipleSelection = []
 }
+
 
 </script>
 
